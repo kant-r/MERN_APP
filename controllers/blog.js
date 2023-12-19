@@ -1,4 +1,5 @@
 import {Blog} from '../Models/blogs.js';
+import { User } from '../Models/users.js';
 
 export const createBlog = async (req,res)=>{
     const {title,description,imgUrl} = req.body
@@ -71,3 +72,40 @@ export const deleteBlog = async (req,res)=>{
         message:"Blog deleted!"
     })
 }
+
+
+export const getAllBlogs = async (req,res)=>{
+   
+    const blogs = await Blog.find();
+
+    if(!blogs) return res.status(404).json({
+        success:false,
+        message:"There is not blog"
+    })
+
+
+    res.json({
+        success:true,
+        message:"Blog deleted!",
+        blogs
+    })
+}
+
+export const getBlogById = async (req,res)=>{
+    
+    const id = req.params.id
+
+    const blog = await Blog.findById(id);
+    
+    if(!blog) return res.status(404).json({
+        success:false,
+        message:"Blog not found"
+    })
+
+    res.json({
+        success:true,
+        message:"you blog",
+        blog
+    })
+}
+
